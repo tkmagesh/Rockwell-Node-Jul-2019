@@ -15,10 +15,21 @@ readStream.on('data', data => {
 
 readStream.on('end', () => {
 	console.log('Thats all folks!!');
+});
+
+/*readStream.on('end', () => {
+	throw new Error('Some intentional error');
+});*/
+
+readStream.on('end', () => {
 	console.log(`IO read count = ${readCount}`);
 });
 
 readStream.on('error', (err) => {
+	console.log('something went wrong');
 	console.log(err);
 });
 
+process.on('uncaughtException', (err, origin) => {
+	console.log('handling exception at the process level');
+});
