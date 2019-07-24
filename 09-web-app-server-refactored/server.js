@@ -2,17 +2,19 @@ const http = require('http'),
 	dataParser = require('./dataParser'),
 	serveStatic = require('./serveStatic'),
 	serveCalculator = require('./serveCalculator');
-	notFoundHandler = require('./notFoundHandler');
+	notFoundHandler = require('./notFoundHandler').
+	app = require('./app');
 
 const portNumber = 8080;
 
-const server = http.createServer((req, res) => {
-	console.log(`${req.method}\t${req.url}`);
-	dataParser(req);
-	serveStatic(req, res);
-	serveCalculator(req, res);
-	notFoundHandler(res);
-});
+app.use(dataParser); 
+app.use(serveStatic); 
+app.use(serveCalculator); 
+app.use(notFoundHandler);
+
+//console.log(`${req.method}\t${req.url}`);
+
+const server = http.createServer(app);
 
 server.listen(portNumber);
 

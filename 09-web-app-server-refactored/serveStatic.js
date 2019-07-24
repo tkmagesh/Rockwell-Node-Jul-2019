@@ -9,7 +9,7 @@ function isStatic(resourceName){
 }
 
 
-module.exports = function(req, res){
+module.exports = function(req, res, next){
 	const resourceName = req.urlObj.pathname === '/' ? '/index.html' : req.urlObj.pathname;
 
 	if (isStatic(resourceName)){
@@ -17,16 +17,21 @@ module.exports = function(req, res){
 		if (!fs.existsSync(resourceFullName)){
 			res.statusCode = 404;
 			res.end();
-			return;
+			next();
 		}
 
 		const stream = fs.createReadStream(resourceFullName);
 		stream.pipe(res);
+		
+		stream.on('end', () => next());
 
 		stream.on('error', (err) => {
 			console.log(err);
 			res.statusCode = 500;
 			res.end();
+			next();
 		});
+	} else {
+		next();
 	}
 }
