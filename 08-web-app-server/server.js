@@ -5,6 +5,14 @@ const http = require('http'),
 	querystring = require('querystring'),
 	calculator = require('./calculator');
 
+
+/*
+dataParser.js
+serveStatic.js
+serveCalculator.js
+notFoundHandler.js
+
+*/
 const portNumber = 8080;
 
 let staticResExtns = ['.html', '.css', '.js', '.jpg', '.png', '.ico', '.xml', '.json', '.txt'];
