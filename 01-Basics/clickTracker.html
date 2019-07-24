@@ -3,6 +3,23 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Click Tracker</title>
+	<script>
+		(function myApp(){
+			var counter = 0;
+			function init(){
+				var btnTrack = document.getElementById('btnTrack');
+				btnTrack.addEventListener('click', onBtnTrackClick);
+			}
+			function onBtnTrackClick(){
+				++counter;
+				var spanCount = document.getElementById('spanCount');
+				spanCount.innerText = '[ ' + counter + ' ]';
+			}
+			window.addEventListener('load', init);
+		})();
+		//myApp();
+
+	</script>
 </head>
 <body>
 	<h1>Click Tracker</h1>
