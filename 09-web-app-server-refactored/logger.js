@@ -4,7 +4,7 @@ module.exports = function(req, res, next){
 	res.on('finish', () => {
 		let endTime = new Date(),
 			delta = endTime - startTime;
-			logString += `\t${res.statusCode}\t${delta}ms`;
+			logString += `\t\t${res.statusCode}\t${delta}ms`;
 		console.log(logString);
 	});
 	next();
