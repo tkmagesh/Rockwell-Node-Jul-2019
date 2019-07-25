@@ -5,7 +5,8 @@ const express = require('express'),
 
 
 router.get('/', (req, res, next) => {
-	res.json(taskService.getAll());
+	taskService
+		.getAll(data => res.json(data));
 });
 
 router.get('/:id', (req, res, next) => {

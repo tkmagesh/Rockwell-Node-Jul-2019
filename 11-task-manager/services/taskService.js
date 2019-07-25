@@ -1,10 +1,12 @@
-let taskList = [
-	{id : 1, name : 'Learn JavaScript', isCompleted : false},
-	{id : 2, name : 'Explore Node.js', isCompleted : true}
-];
+const db = require('./db');
 
-function getAll(){
-	return [...taskList];
+var taskList = [];
+
+function getAll(callback){
+	db.getData((data) => {
+		callback([...data]);	
+	});
+	
 }
 
 function get(taskId){
