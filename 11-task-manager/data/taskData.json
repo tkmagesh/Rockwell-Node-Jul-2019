@@ -1,4 +1,1 @@
-[
-	{"id" : 1, "name" : "Master JavaScript", "isCompleted" : false},
-	{"id" : 2, "name" : "Experiment with Node.js", "isCompleted" : true}
-]
+[{"id":2,"name":"Experiment with Node.js","isCompleted":true},{"id":3,"name":"Build data services for the web","isCompleted":true},{"id":4,"name":"Build data services","isCompleted":false}]

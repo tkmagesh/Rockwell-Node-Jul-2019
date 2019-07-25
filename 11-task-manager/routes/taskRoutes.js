@@ -23,9 +23,9 @@ router.get('/', async (req, res, next) => {
 	res.json(data);
 });
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
 	const taskId = parseInt(req.params.id),
-		task = taskService.get(taskId);
+		task = await taskService.get(taskId);
 	if (task){
 		res.json(task);
 	} else {
@@ -33,17 +33,17 @@ router.get('/:id', (req, res, next) => {
 	}
 });
 
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
 	const taskData = req.body;
-	let newTask = taskService.addNew(taskData);
+	let newTask = await taskService.addNew(taskData);
 	res.status(201).json(newTask);
 });
 
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
 	const taskId = parseInt(req.params.id),
 		taskDataToUpdate = req.body;
-	let updatedTask = taskService.update(taskId, taskDataToUpdate);
+	let updatedTask = await taskService.update(taskId, taskDataToUpdate);
 
 	if (updatedTask){
 		res.json(updatedTask);
@@ -52,10 +52,10 @@ router.put('/:id', (req, res, next) => {
 	}
 });
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
 	const taskId = parseInt(req.params.id);
 	try{
-		taskService.remove(taskId)
+		await taskService.remove(taskId)
 		res.json(null);
 	} catch(err) {
 		res.status(404).end();
