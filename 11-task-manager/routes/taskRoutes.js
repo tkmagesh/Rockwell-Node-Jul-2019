@@ -1,18 +1,16 @@
 const express = require('express'),
-	router = express.Router();
+	router = express.Router(),
+	taskService = require('../services/taskService');
 
-let taskList = [
-	{id : 1, name : 'Learn JavaScript', isCompleted : false},
-	{id : 2, name : 'Explore Node.js', isCompleted : true}
-];
+
 
 router.get('/', (req, res, next) => {
-	res.json(taskList);
+	res.json(taskService.getAll());
 });
 
 router.get('/:id', (req, res, next) => {
 	const taskId = parseInt(req.params.id),
-		task = taskList.find(task => task.id === taskId);
+		task = taskService.get(taskId);
 	if (task){
 		res.json(task);
 	} else {
@@ -22,19 +20,18 @@ router.get('/:id', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
 	const taskData = req.body;
-	taskData.id = taskList.reduce((result, task) => result > task.id ? result : task.id, 0) + 1;
-	taskList.push(taskData);
-	res.status(201).json(taskData);
+	let newTask = taskService.addNew(taskData);
+	res.status(201).json(newTask);
 });
 
 
 router.put('/:id', (req, res, next) => {
 	const taskId = parseInt(req.params.id),
 		taskDataToUpdate = req.body;
-	const task = taskList.find(task => task.id === taskId);
-	if (task){
-		taskList = taskList.map(tk => tk.id === taskId ? taskDataToUpdate : tk );
-		res.json(taskDataToUpdate);
+	let updatedTask = taskService.update(taskId, taskDataToUpdate);
+
+	if (updatedTask){
+		res.json(updatedTask);
 	} else {
 		res.status(404).end();
 	}
@@ -42,13 +39,12 @@ router.put('/:id', (req, res, next) => {
 
 router.delete('/:id', (req, res, next) => {
 	const taskId = parseInt(req.params.id);
-	const task = taskList.find(task => task.id === taskId);
-	if (task){
-		taskList = taskList.filter(tk => tk.id !== taskId);
+	try{
+		taskService.remove(taskId)
 		res.json(null);
-	} else {
+	} catch(err) {
 		res.status(404).end();
 	}
-})
+});
 
 module.exports = router; 
