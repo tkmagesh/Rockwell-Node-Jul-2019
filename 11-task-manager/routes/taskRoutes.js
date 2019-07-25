@@ -4,9 +4,23 @@ const express = require('express'),
 
 
 
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
+
+	/*
+	//Sync
+	let data = taskService.getAll();
+	res.json(data);
+	*/	
+
+	/*
+	//Async using Promise
 	taskService
-		.getAll(data => res.json(data));
+		.getAll()
+		.then(data => res.json(data));
+	*/
+
+	let data = await taskService.getAll();
+	res.json(data);
 });
 
 router.get('/:id', (req, res, next) => {

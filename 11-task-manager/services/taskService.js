@@ -2,11 +2,8 @@ const db = require('./db');
 
 var taskList = [];
 
-function getAll(callback){
-	db.getData((data) => {
-		callback([...data]);	
-	});
-	
+function getAll(){
+	return db.getData();
 }
 
 function get(taskId){
